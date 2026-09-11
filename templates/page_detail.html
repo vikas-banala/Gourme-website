@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Banner -->
+{% if page.hero_image %}
+<section class="relative w-full h-[50vh] md:h-[60vh] overflow-hidden">
+    <img src="{{ page.hero_image.url }}" alt="{{ page.title }}" class="absolute inset-0 w-full h-full object-cover brightness-75">
+    <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+        <h1 class="text-white text-5xl md:text-7xl font-serif uppercase tracking-[0.2em] leading-tight drop-shadow-2xl">
+            {{ page.title }}
+        </h1>
+        {% if page.sub_headline %}
+        <p class="text-white/80 text-lg md:text-xl mt-6 font-serif italic max-w-2xl">{{ page.sub_headline }}</p>
+        {% endif %}
+    </div>
+</section>
+{% else %}
+<section class="w-full pt-32 pb-12 px-6 md:px-12 bg-[#F5F5F0]">
+    <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-serif uppercase tracking-[0.2em] leading-tight text-[#2D2D2A]">
+            {{ page.title }}
+        </h1>
+        {% if page.sub_headline %}
+        <p class="text-[#8A9A5B] text-lg md:text-xl mt-6 font-serif italic">{{ page.sub_headline }}</p>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Body Text (page intro, if any) -->
+{% if page.body_text %}
+<section class="w-full px-6 md:px-12 py-12 bg-[#F5F5F0]">
+    <div class="max-w-4xl mx-auto">
+        <div class="prose prose-lg max-w-none text-[#2D2D2A]/80 leading-relaxed font-serif">
+            {{ page.body_text|safe }}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Articles / Blog Posts -->
+{% if articles %}
+<section class="w-full px-6 md:px-12 py-8 bg-[#F5F5F0]">
+    <div class="max-w-5xl mx-auto space-y-24">
+        {% for article in articles %}
+        <article class="relative">
+            <!-- Article Header -->
+            <div class="mb-12">
+                {% if article.published_date %}
+                <p class="text-xs uppercase tracking-[0.3em] text-[#A67B5B] font-sans mb-4">
+                    {{ article.published_date|date:"F j, Y" }}
+                </p>
+                {% endif %}
+                <h2 class="text-3xl md:text-5xl font-serif text-[#2D2D2A] leading-tight mb-6">
+                    {{ article.title }}
+                </h2>
+                {% if article.summary %}
+                <p class="text-lg text-[#2D2D2A]/60 font-serif italic max-w-3xl leading-relaxed">
+                    {{ article.summary }}
+                </p>
+                {% endif %}
+            </div>
+
+            <!-- Featured Image -->
+            {% if article.featured_image %}
+            <div class="w-full mb-12 overflow-hidden">
+                <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" 
+                     class="w-full h-[40vh] md:h-[50vh] object-cover transition-transform duration-[1500ms] hover:scale-[1.02]">
+            </div>
+            {% endif %}
+
+            <!-- Main Rich Text Content (Summernote) -->
+            {% if article.content %}
+            <div class="max-w-3xl mx-auto mb-12 prose prose-lg font-serif text-[#2D2D2A]/80 leading-relaxed">
+                {{ article.content|safe }}
+            </div>
+            {% endif %}
+
+            <!-- Content Blocks (if any) -->
+            <div class="max-w-3xl mx-auto">
+                {% for block in article.blocks.all %}
+
+                    {% if block.block_type == "heading" %}
+                    <h3 class="text-2xl md:text-3xl font-serif text-[#2D2D2A] mt-12 mb-6 leading-tight">
+                        {{ block.text_content }}
+                    </h3>
+
+                    {% elif block.block_type == "paragraph" %}
+                    <div class="text-[#2D2D2A]/80 text-base md:text-lg leading-relaxed font-serif mb-8">
+                        {{ block.text_content|linebreaks }}
+                    </div>
+
+                    {% elif block.block_type == "image" %}
+                    {% if block.image %}
+                    <figure class="my-12 -mx-4 md:-mx-12">
+                        <img src="{{ block.image.url }}" alt="{{ block.image_caption|default:article.title }}" 
+                             class="w-full object-cover shadow-sm">
+                        {% if block.image_caption %}
+                        <figcaption class="text-center text-sm text-[#2D2D2A]/50 font-sans mt-4 italic px-4">
+                            {{ block.image_caption }}
+                        </figcaption>
+                        {% endif %}
+                    </figure>
+                    {% endif %}
+
+                    {% elif block.block_type == "video" %}
+                    {% if block.video_url %}
+                    <div class="my-12 -mx-4 md:-mx-12">
+                        <div class="relative w-full" style="padding-bottom: 56.25%;">
+                            <iframe src="{{ block.video_url }}" 
+                                    class="absolute inset-0 w-full h-full" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                        {% if block.image_caption %}
+                        <p class="text-center text-sm text-[#2D2D2A]/50 font-sans mt-4 italic">
+                            {{ block.image_caption }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% elif block.block_type == "quote" %}
+                    <blockquote class="my-12 py-8 px-8 md:px-12 border-l-4 border-[#A67B5B] bg-white/50">
+                        <p class="text-xl md:text-2xl font-serif italic text-[#2D2D2A]/90 leading-relaxed">
+                            {{ block.text_content }}
+                        </p>
+                    </blockquote>
+
+                    {% elif block.block_type == "divider" %}
+                    <div class="my-12 flex items-center justify-center space-x-4">
+                        <span class="block w-2 h-2 rounded-full bg-[#A67B5B]/30"></span>
+                        <span class="block w-2 h-2 rounded-full bg-[#A67B5B]/50"></span>
+                        <span class="block w-2 h-2 rounded-full bg-[#A67B5B]/30"></span>
+                    </div>
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- Article Divider (between articles) -->
+            {% if not forloop.last %}
+            <div class="mt-20 border-t border-[#D7C9B8]"></div>
+            {% endif %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Products Grid -->
+{% if products %}
+<section class="w-full px-6 md:px-12 py-16 bg-[#F5F5F0]">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-16">
+            {% for product in products %}
+            <div class="group relative overflow-hidden bg-white">
+                {% if product.primary_image %}
+                <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" class="w-full transition-opacity duration-500 group-hover:opacity-0">
+                {% else %}
+                <div class="w-full aspect-square bg-gray-100 flex items-center justify-center transition-opacity duration-500 group-hover:opacity-0">
+                    <span class="text-[#2D2D2A]/40 text-sm font-sans uppercase tracking-widest">No Image</span>
+                </div>
+                {% endif %}
+                {% if product.hover_image %}
+                <img src="{{ product.hover_image.url }}" alt="{{ product.name }} alternate" class="absolute top-0 left-0 w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                {% else %}
+                <div class="absolute top-0 left-0 w-full aspect-square bg-gray-200 opacity-0 flex items-center justify-center transition-opacity duration-500 group-hover:opacity-100">
+                    <span class="text-[#2D2D2A]/40 text-sm font-sans uppercase tracking-widest">No Hover</span>
+                </div>
+                {% endif %}
+                <div class="p-4 text-center">
+                    <p class="font-bold uppercase tracking-tight text-[#2D2D2A]">{{ product.name }}</p>
+                    <p class="text-[#2D2D2A]/70 mt-1">${{ product.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

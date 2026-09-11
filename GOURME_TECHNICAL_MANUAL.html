@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOURME Technical Documentation</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px; background: white; }
+        h1 { text-align: center; font-size: 32px; border-bottom: 2px solid #2D2D2A; padding-bottom: 20px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { font-size: 24px; color: #2D2D2A; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 40px; }
+        h3 { font-size: 18px; color: #A67B5B; margin-top: 25px; }
+        p { margin-bottom: 15px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f9f9f9; font-weight: bold; }
+        .footer { margin-top: 60px; text-align: center; font-size: 12px; color: #777; border-top: 1px solid #eee; padding-top: 20px; }
+        @media print {
+            body { padding: 0; }
+            .no-print { display: none; }
+        }
+        .header-logo { text-align: center; font-size: 48px; font-weight: bold; letter-spacing: 8px; margin-bottom: 10px; color: #2D2D2A; }
+        .subtitle { text-align: center; font-style: italic; color: #666; margin-bottom: 50px; }
+    </style>
+</head>
+<body>
+    <div class="header-logo">G O U R M E</div>
+    <div class="subtitle">Premium Mushroom Marketplace & Content Platform</div>
+    
+    <h1>Technical Specification & System Manual</h1>
+
+    <h2>1. Executive Summary</h2>
+    <p>GOURME is a professional-grade e-commerce and content management system developed specifically for the premium mushroom industry. The platform utilizes a Scandinavian minimalist design philosophy, combining high-end aesthetic appeal with robust technical stability. Built on the Django framework, the architecture ensures scalability, security, and exceptional performance.</p>
+
+    <h2>2. System Architecture</h2>
+    <p>The platform follows a monolithic Model-View-Template (MVT) pattern, ensuring high cohesion and simplified maintenance. The core backend is powered by Python 3.x and Django 5, providing a secure and stable environment for both transactional data and content delivery.</p>
+    
+    <h3>2.1 Database Specification</h3>
+    <p>The system utilizes a relational SQLite database for the current development and initial production phase, optimized for high read speeds. The schema is fully compliant with PostgreSQL for future enterprise scaling.</p>
+
+    <h2>3. Core Functional Modules</h2>
+    
+    <h3>3.1 Dynamic Content Management (CMS)</h3>
+    <p>The "Page-as-a-Service" logic allows administrators to create and manage an unlimited number of pages without developer intervention. Every page supports custom Hero banners, sub-headlines, and rich body text. Furthermore, the "Featured Association" system allows pages to dynamically display specific product collections or blog articles based on the page's unique slug.</p>
+
+    <h3>3.2 Advanced Storytelling Engine</h3>
+    <p>The platform integrates a sophisticated storytelling module. Articles support "Content Blocks," allowing for a modular layout of headings, paragraphs, high-resolution images with captions, and responsive 16:9 video embeds. This enables a rich, editorial-style experience for recipes and educational content.</p>
+
+    <h3>3.3 Lead Acquisition & Communication</h3>
+    <p>A mission-critical contact system captures 100% of visitor inquiries. This data is synchronized with a real-time notification engine and a custom WhatsApp integration, allowing for immediate lead conversion through direct messaging directly from the administration dashboard.</p>
+
+    <h2>4. Administrative Organization</h2>
+    <p>The backend administration is segmented into four strategic pillars to streamline operations:</p>
+    <table>
+        <tr>
+            <th>Group</th>
+            <th>Responsibility</th>
+            <th>Key Assets</th>
+        </tr>
+        <tr>
+            <td>SHOP</td>
+            <td>Commercial Operations</td>
+            <td>Products, Categories, Sales Pages</td>
+        </tr>
+        <tr>
+            <td>DISCOVER</td>
+            <td>Content Marketing</td>
+            <td>Articles, Recipes, Story Pages</td>
+        </tr>
+        <tr>
+            <td>VALUE</td>
+            <td>Promotional Strategy</td>
+            <td>Offers, Combos, Subscriptions</td>
+        </tr>
+        <tr>
+            <td>UTILITY</td>
+            <td>Backend Support</td>
+            <td>Contact Leads, Utility Pages</td>
+        </tr>
+    </table>
+
+    <h2>5. Deployment & Security</h2>
+    <p>The system implements industry-standard security protocols, including Cross-Site Request Forgery (CSRF) protection, XSS filtering, and secure password hashing. Regular snapshots are automated and stored in the localized <code>/backups/</code> directory for disaster recovery.</p>
+
+    <div class="footer">
+        GOURME Marketplace Official Documentation &copy; 2026. All Rights Reserved.
+    </div>
+
+    <div class="no-print" style="margin-top: 40px; text-align: center;">
+        <button onclick="window.print()" style="padding: 10px 20px; background: #2D2D2A; color: white; border: none; cursor: pointer; border-radius: 4px;">
+            Download as PDF (Print)
+        </button>
+    </div>
+</body>
+</html>
