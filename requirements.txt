@@ -1,4 +1,4 @@
-﻿asgiref==3.11.1
+asgiref==3.11.1
 bleach==6.3.0
 Django==6.0.4
 django-summernote==0.8.20.0
