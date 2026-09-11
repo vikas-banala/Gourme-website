@@ -152,3 +152,5 @@ CONTACT_NOTIFY_EMAIL = 'owner@gourme.in'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'

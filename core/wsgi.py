@@ -14,3 +14,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
 application = get_wsgi_application()
+
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.models import update_last_login
+user_logged_in.disconnect(update_last_login)
